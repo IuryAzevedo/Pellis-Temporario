@@ -1,4 +1,3 @@
-import { log } from "console";
 import prismaClient from "../../prisma";
 import { mailBody } from "../../utils/mailBody";
 import mailConfig from "../Email/mailer";
@@ -6,6 +5,22 @@ import { sign } from "jsonwebtoken"
 
 interface UpdatePassRequest {
     email: string;
+}
+// criando token com jwt
+function generateResetToken(): string {
+    // const token = sign({ code: generateCode() }, process.env.JWT_SECRET!, { expiresIn: '20m' });
+    const token = generateCode()
+    return token;
+}
+// criando token de 4 dígitos
+function generateCode(): string {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let code = "";
+    for (let i = 0; i < 4; i++) {
+        const randomIndex = Math.floor(Math.random() * characters.length);
+        code += characters.charAt(randomIndex);
+    }
+    return code;
 }
 
 //Para vc se familiarizar, Bigas!!!!!
@@ -53,23 +68,5 @@ class UpdatePassService {
     }
 }
 
-
-// criando token com jwt
-function generateResetToken(): string {
-    // const token = sign({ code: generateCode() }, process.env.JWT_SECRET!, { expiresIn: '20m' });
-    const token = generateCode()
-    return token;
-}
-
-// criando token de 4 dígitos
-function generateCode(): string {
-    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let code = "";
-    for (let i = 0; i < 4; i++) {
-        const randomIndex = Math.floor(Math.random() * characters.length);
-        code += characters.charAt(randomIndex);
-    }
-    return code;
-}
 
 export { UpdatePassService };
