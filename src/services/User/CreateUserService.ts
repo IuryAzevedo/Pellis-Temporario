@@ -1,7 +1,7 @@
 
 import prismaClient from "../../prisma"
 import bcrypt from "bcryptjs"
-import { Express } from "express";
+// import { Express } from "express";
 
 interface UserRequest {
     name: string,
